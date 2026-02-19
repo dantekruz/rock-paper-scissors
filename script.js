@@ -102,15 +102,11 @@ function initResultPage() {
 
   if (result === 'win') {
     resultTextEl.textContent = 'YOU WIN AGAINST PC';
-    const ripple = document.createElement('div');
-    ripple.classList.add('ripple');
-    playerPickedEl.parentElement.appendChild(ripple);
+    playerPickedEl.classList.add('win-ripple');
     nextBtn.classList.remove('hidden');
   } else if (result === 'lose') {
     resultTextEl.textContent = 'YOU LOST AGAINST PC';
-    const ripple = document.createElement('div');
-    ripple.classList.add('ripple', 'lose-ripple');
-    computerPickedEl.parentElement.appendChild(ripple);
+    computerPickedEl.classList.add('win-ripple');
   } else {
     resultTextEl.textContent = "IT'S A DRAW";
   }
@@ -126,29 +122,13 @@ function initResultPage() {
 
 
 function initHurrayPage() {
-  generateStars();
 
   document.getElementById('hurray-play').addEventListener('click', () => {
     window.location.href = 'index.html';
   });
 }
 
-function generateStars() {
-  const container = document.getElementById('stars-container');
-  if (!container) return;
-  container.innerHTML = '';
 
-  for (let i = 0; i < 12; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.textContent = '★';
-    star.style.top            = Math.random() * 80 + '%';
-    star.style.left           = Math.random() * 90 + '%';
-    star.style.fontSize       = (20 + Math.random() * 40) + 'px';
-    star.style.animationDelay = (Math.random() * 2) + 's';
-    container.appendChild(star);
-  }
-}
 
 
 const page = window.location.pathname;

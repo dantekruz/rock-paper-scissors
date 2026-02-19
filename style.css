@@ -124,7 +124,6 @@ body {
   align-items: center;
   cursor: pointer;
   transition: transform 0.15s ease;
-  user-select: none;
 }
 
 .choice:hover  { transform: scale(1.08); }
@@ -157,7 +156,7 @@ body {
 .result-side p {
   font-size: 1rem;
   letter-spacing: 2px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .picked-wrapper {
@@ -165,6 +164,7 @@ body {
   display: inline-block;
 }
 
+/* ── PICKED CIRCLE ── */
 .picked-circle {
   width: 150px;
   height: 150px;
@@ -174,8 +174,54 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 3;
 }
 
+/* Concentric filled rings behind the winning circle */
+.picked-circle.win-ripple::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: -1;
+  animation: concentricPulse 2.4s ease-in-out infinite;
+}
+
+/* Smooth expanding ripple wave using box-shadow spread radius */
+.picked-circle.win-ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+  animation: rippleWave 1.8s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+  pointer-events: none;
+  z-index: 4;
+}
+
+@keyframes concentricPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 7px  #3aac28,
+      0 0 0 14px  #2e9620,
+      0 0 0 28px #257319;
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px  #3aac28,
+      0 0 0 28px  #2e9620,
+      0 0 0 48px #257319;
+  }
+}
+
+@keyframes rippleWave {
+  0%   { box-shadow: 0 0 0 0px  rgba(255, 255, 255, 0.6); }
+  70%  { box-shadow: 0 0 0 55px rgba(255, 255, 255, 0);   }
+  100% { box-shadow: 0 0 0 55px rgba(255, 255, 255, 0);   }
+}
+
+/* ── RESULT MIDDLE ── */
 .result-middle {
   text-align: center;
 }
@@ -202,28 +248,6 @@ body {
 
 #play-again:hover { background: #e8e8e8; }
 
-/* Ripple */
-.ripple {
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  border: 20px solid rgba(0, 255, 0, 0.4);
-  top: -15px;
-  left: -15px;
-  pointer-events: none;
-  animation: ripplePulse 1.4s infinite ease-out;
-}
-
-.ripple.lose-ripple {
-  border-color: rgba(255, 0, 0, 0.4);
-}
-
-@keyframes ripplePulse {
-  0%   { transform: scale(0.8); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-
 /* ── HURRAY SCREEN ── */
 .hurray-screen {
   display: flex;
@@ -235,29 +259,17 @@ body {
   overflow: hidden;
 }
 
-.stars-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.star {
-  position: absolute;
-  color: rgba(255, 255, 255, 0.7);
-  animation: twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle {
-  from { opacity: 0.4; transform: scale(0.9); }
-  to   { opacity: 1;   transform: scale(1.2); }
-}
-
-.trophy {
-  font-size: 120px;
+.trophy-svg {
+  width: 340px;
+  height: 220px;
   position: relative;
   z-index: 1;
+  animation: trophyBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes trophyBounce {
+  0%, 100% { transform: translateY(0);     }
+  50%       { transform: translateY(-10px); }
 }
 
 .hurray-screen h1 {
@@ -327,48 +339,73 @@ body {
   bottom: 100px;
   width: 300px;
   background: #004429;
-  padding: 20px;
-  border-radius: 10px;
-  border: 5px solid #fff;
+  padding: 24px 24px 20px;
+  border-radius: 16px;
+  border: 4px solid #6abf4b;
   color: #fff;
   z-index: 200;
+  overflow: visible;
 }
 
 .rules-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .rules-header h2 {
-  font-size: 1.1rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  letter-spacing: 0;
 }
 
 .close-btn {
   background: red;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  border: 3px solid #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
   flex-shrink: 0;
+  position: absolute;
+  top: -16px;
+  right: -16px;
   transition: background 0.2s;
 }
 
 .close-btn:hover { background: #cc0000; }
 
 .rules-box ul {
-  margin-top: 15px;
-  padding-left: 20px;
+  margin-top: 18px;
+  padding-left: 0;
+  list-style: none;
 }
 
 .rules-box li {
-  margin-bottom: 10px;
-  font-size: 14px;
-  line-height: 1.4;
+  margin-bottom: 14px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  padding-left: 22px;
+  position: relative;
+}
+
+.rules-box li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  background: #FFD233;
+  border-radius: 2px;
 }
 
 /* ── UTILITY ── */
