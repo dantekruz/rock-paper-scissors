@@ -1,0 +1,375 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #6abf4b;
+  font-family: 'Arial Black', Arial, sans-serif;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* ── HEADER ── */
+.game-header {
+  margin: 24px auto;
+  max-width: 900px;
+  border: 3px solid #fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  padding: 20px 30px;
+}
+
+.title {
+  flex: 1;
+  font-size: 2.6rem;
+  letter-spacing: 3px;
+  line-height: 1.1;
+}
+
+.score-board {
+  display: flex;
+  gap: 16px;
+}
+
+.score-box {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px 30px;
+  text-align: center;
+  min-width: 130px;
+}
+
+.score-box p {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #333;
+}
+
+.score-box h2 {
+  font-size: 3rem;
+  color: #111;
+  margin-top: 6px;
+}
+
+/* ── SELECTION SCREEN ── */
+.selection-screen {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.game-area {
+  position: relative;
+  width: 420px;
+  height: 360px;
+  margin: 60px auto 0;
+}
+
+/* Triangle lines */
+.triangle {
+  position: absolute;
+  width: 300px;
+  height: 260px;
+  left: 60px;
+  top: 40px;
+}
+
+.line {
+  position: absolute;
+  height: 8px;
+  background: #2e4e2e;
+  border-radius: 4px;
+}
+
+.line.top {
+  width: 300px;
+  top: 0;
+  left: 0;
+}
+
+.line.left {
+  width: 300px;
+  top: 0;
+  left: 0;
+  transform: rotate(60deg);
+  transform-origin: left top;
+}
+
+.line.right {
+  width: 300px;
+  top: 0;
+  right: 0;
+  transform: rotate(-60deg);
+  transform-origin: right top;
+}
+
+/* Choice circles */
+.choice {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  user-select: none;
+}
+
+.choice:hover  { transform: scale(1.08); }
+.choice:active { transform: scale(0.96); }
+
+.rock     { top: 0;    left: 0;   box-shadow: 0 0 0 14px #2176ae; }
+.scissors { top: 0;    right: 0;  box-shadow: 0 0 0 14px #9b59b6; }
+.paper    {
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 14px #f0a500;
+}
+
+.paper:hover  { transform: translateX(-50%) scale(1.08); }
+.paper:active { transform: translateX(-50%) scale(0.96); }
+
+/* ── RESULT SCREEN ── */
+.result-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  margin-top: 80px;
+}
+
+.result-side {
+  text-align: center;
+}
+
+.result-side p {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.picked-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.picked-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-middle {
+  text-align: center;
+}
+
+.result-middle h2 {
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+#play-again {
+  margin-top: 10px;
+  padding: 10px 30px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 900;
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #fff;
+  color: #333;
+  transition: background 0.2s;
+}
+
+#play-again:hover { background: #e8e8e8; }
+
+/* Ripple */
+.ripple {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 20px solid rgba(0, 255, 0, 0.4);
+  top: -15px;
+  left: -15px;
+  pointer-events: none;
+  animation: ripplePulse 1.4s infinite ease-out;
+}
+
+.ripple.lose-ripple {
+  border-color: rgba(255, 0, 0, 0.4);
+}
+
+@keyframes ripplePulse {
+  0%   { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* ── HURRAY SCREEN ── */
+.hurray-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.stars-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.7);
+  animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.4; transform: scale(0.9); }
+  to   { opacity: 1;   transform: scale(1.2); }
+}
+
+.trophy {
+  font-size: 120px;
+  position: relative;
+  z-index: 1;
+}
+
+.hurray-screen h1 {
+  font-size: 3.5rem;
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.hurray-screen h3 {
+  margin-top: 10px;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+#hurray-play {
+  margin-top: 30px;
+  padding: 12px 36px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 900;
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #fff;
+  color: #333;
+  position: relative;
+  z-index: 1;
+  transition: background 0.2s;
+}
+
+#hurray-play:hover { background: #e8e8e8; }
+
+/* ── BOTTOM BUTTONS ── */
+.bottom-buttons {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  display: flex;
+  gap: 15px;
+}
+
+#rules-btn,
+#next-btn {
+  border: 3px solid #fff;
+  background: transparent;
+  color: #fff;
+  padding: 8px 25px;
+  border-radius: 8px;
+  font-weight: 900;
+  font-family: 'Arial Black', Arial, sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#rules-btn:hover,
+#next-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── RULES BOX ── */
+.rules-box {
+  position: fixed;
+  right: 40px;
+  bottom: 100px;
+  width: 300px;
+  background: #004429;
+  padding: 20px;
+  border-radius: 10px;
+  border: 5px solid #fff;
+  color: #fff;
+  z-index: 200;
+}
+
+.rules-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rules-header h2 {
+  font-size: 1.1rem;
+}
+
+.close-btn {
+  background: red;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.close-btn:hover { background: #cc0000; }
+
+.rules-box ul {
+  margin-top: 15px;
+  padding-left: 20px;
+}
+
+.rules-box li {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ── UTILITY ── */
+.hidden { display: none !important; }

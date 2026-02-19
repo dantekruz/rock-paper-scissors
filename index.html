@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="game-header">
+    <div class="title">ROCK<br>PAPER<br>SCISSORS</div>
+    <div class="score-board">
+      <div class="score-box">
+        <p>COMPUTER SCORE</p>
+        <h2 id="computer-score">0</h2>
+      </div>
+      <div class="score-box">
+        <p>YOUR SCORE</p>
+        <h2 id="player-score">0</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="selection-screen">
+    <div class="game-area">
+      <div class="triangle">
+        <div class="line top"></div>
+        <div class="line left"></div>
+        <div class="line right"></div>
+      </div>
+      <div class="choice rock"     data-choice="rock">✊</div>
+      <div class="choice scissors" data-choice="scissors">✌</div>
+      <div class="choice paper"    data-choice="paper">✋</div>
+    </div>
+  </div>
+
+  <!-- Rules pop-up -->
+  <div class="rules-box hidden" id="rules-box">
+    <div class="rules-header">
+      <h2>RULES</h2>
+      <div class="close-btn" id="close-btn">✕</div>
+    </div>
+    <ul>
+      <li>Rock beats Scissors.</li>
+      <li>Scissors beats Paper.</li>
+      <li>Paper beats Rock.</li>
+      <li>Same choice = Draw. No score changes.</li>
+      <li>Scores are saved and never reset on Play Again.</li>
+    </ul>
+  </div>
+
+  <div class="bottom-buttons">
+    <button id="rules-btn">RULES</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
